@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>Transformation21</name>
+    <name>SPAYMCARD</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -427,21 +427,21 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2023/08/21 10:22:49.195</created_date>
-    <modified_user>-</modified_user>
-    <modified_date>2023/08/21 10:22:49.195</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <created_date>2023/08/21 13:53:04.048</created_date>
+    <modified_user>admin</modified_user>
+    <modified_date>2023/08/21 14:31:09.301</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>ec2-user-app</name>
-    <server>localhost</server>
+    <name>ec2-user-app-direct</name>
+    <server>app-gms.cilpkhhykq9i.ap-northeast-2.rds.amazonaws.com</server>
     <type>MYSQL</type>
     <access>Native</access>
     <database>stg</database>
-    <port>13306</port>
+    <port>3306</port>
     <username>stgadmin</username>
     <password>Encrypted 2be98afc86aa7a190ac0cbd75ccc3fd9b</password>
     <servername/>
@@ -449,24 +449,13 @@
     <index_tablespace/>
     <attributes>
       <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>13306</attribute>
+        <code>EXTRA_OPTION_MYSQL.defaultFetchSize</code>
+        <attribute>500</attribute>
       </attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>XPROCERA_CALS</name>
-    <server>210.116.121.68</server>
-    <type>ORACLE</type>
-    <access>Native</access>
-    <database>ORCL</database>
-    <port>1521</port>
-    <username>XPROCERA_CALS</username>
-    <password>Encrypted 2be98afc86ae4b7b68a3e815cf8c0fe99</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.useCursorFetch</code>
+        <attribute>true</attribute>
+      </attribute>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
         <attribute>N</attribute>
@@ -481,7 +470,7 @@
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>1521</attribute>
+        <attribute>3306</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -492,8 +481,8 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
-        <code>STRICT_NUMBER_38_INTERPRETATION</code>
-        <attribute>N</attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
       </attribute>
       <attribute>
         <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
@@ -528,31 +517,45 @@
       <schema_name/>
     </partitioning>
     <connection>XPROCERA_CALS</connection>
-    <sql>SELECT LOSS_DATE
-     , LOSS_SEQ
-     , LOSS_DIV
-     , LOSS_ITEM
-     , LOSS_CONT
-     , LOSS_PLACE
-     , LOSS_NAME
-     , ENTR_DATE
-     , ENTR_CRS
-     , ENTR_TIME
-     , ENTR_NAME
-     , RESERV_NO
-     , RETURN_DATE
-     , RETURN_METH
-     , RETURN_NAME
-     , RETURN_CONT
-     , RETURN_RECE
-     , RETURN_TELE
-     , RETURN_ZIP
-     , RETURN_ADDR
-     , RETURN_ADDR1
-     , PHOTO_NAME
-     , KEYIN_EMPNO
-     , KEYIN_DATE
-FROM SLOSSHIST</sql>
+    <sql>SELECT PAYMENT_DATE
+    , SHOP_CODE
+    , SLIP_NO
+    , PAYMENT_DIV
+    , LOCK_NO
+    , PAYMENT_NAME
+    , MEMB_NO
+    , BOOK_CRS
+    , BOOK_TIME
+    , PAYMENT_CODE
+    , APPROVE_DIV
+    , PAYMENT_NO
+    , VALIDITY_DATE
+    , APPROVE_NO
+    , CARD_SWIPE_DIV
+    , CARD_SEQ
+    , CARD_MAX_SEQ
+    , CARD_UNIQUE
+    , CARD_MONTH
+    , CARD_KIND
+    , CARD_NOTICE
+    , CARD_DDC
+    , CARD_VAN_CODE
+    , CARD_CUST_CODE
+    , CARD_CUST_NAME
+    , CARD_TMID
+    , JOIN_NO
+    , PAYMENT_AMT
+    , CARD_KEYIN
+    , READ_DATA
+    , RESP_CODE
+    , CARD_MSG
+    , CARD_KEYNO
+    , CO_DIV
+    , RTN_DATE
+    , KEYIN_EMPNO
+    , KEYIN_DATE
+    , PREPAY_DIV
+FROM SPAYMCARD</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -563,11 +566,34 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>LOSS_DATE</name>
+        <name>PAYMENT_DATE</name>
         <length>8</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>LOSS_DATE</comments>
+        <comments>PAYMENT_DATE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>SHOP_CODE</name>
+        <length>2</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>SHOP_CODE</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -586,11 +612,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>Integer</type>
         <storagetype>normal</storagetype>
-        <name>LOSS_SEQ</name>
-        <length>5</length>
+        <name>SLIP_NO</name>
+        <length>15</length>
         <precision>0</precision>
         <origin>Table input</origin>
-        <comments>LOSS_SEQ</comments>
+        <comments>SLIP_NO</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -609,149 +635,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>LOSS_DIV</name>
-        <length>2</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>LOSS_DIV</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>ko_KR</date_format_locale>
-        <date_format_timezone>Asia/Seoul</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>LOSS_ITEM</name>
-        <length>50</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>LOSS_ITEM</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>ko_KR</date_format_locale>
-        <date_format_timezone>Asia/Seoul</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>LOSS_CONT</name>
-        <length>2000</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>LOSS_CONT</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>ko_KR</date_format_locale>
-        <date_format_timezone>Asia/Seoul</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>LOSS_PLACE</name>
-        <length>50</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>LOSS_PLACE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>ko_KR</date_format_locale>
-        <date_format_timezone>Asia/Seoul</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>LOSS_NAME</name>
-        <length>50</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>LOSS_NAME</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>ko_KR</date_format_locale>
-        <date_format_timezone>Asia/Seoul</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>ENTR_DATE</name>
-        <length>8</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>ENTR_DATE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>ko_KR</date_format_locale>
-        <date_format_timezone>Asia/Seoul</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>ENTR_CRS</name>
+        <name>PAYMENT_DIV</name>
         <length>1</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>ENTR_CRS</comments>
+        <comments>PAYMENT_DIV</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -770,11 +658,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>ENTR_TIME</name>
-        <length>4</length>
+        <name>LOCK_NO</name>
+        <length>5</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>ENTR_TIME</comments>
+        <comments>LOCK_NO</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -793,11 +681,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>ENTR_NAME</name>
+        <name>PAYMENT_NAME</name>
         <length>50</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>ENTR_NAME</comments>
+        <comments>PAYMENT_NAME</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -816,11 +704,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>RESERV_NO</name>
+        <name>MEMB_NO</name>
         <length>10</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>RESERV_NO</comments>
+        <comments>MEMB_NO</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -839,11 +727,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>RETURN_DATE</name>
-        <length>8</length>
+        <name>BOOK_CRS</name>
+        <length>1</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>RETURN_DATE</comments>
+        <comments>BOOK_CRS</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -862,11 +750,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>RETURN_METH</name>
-        <length>50</length>
+        <name>BOOK_TIME</name>
+        <length>4</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>RETURN_METH</comments>
+        <comments>BOOK_TIME</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -885,11 +773,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>RETURN_NAME</name>
-        <length>50</length>
+        <name>PAYMENT_CODE</name>
+        <length>2</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>RETURN_NAME</comments>
+        <comments>PAYMENT_CODE</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -908,11 +796,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>RETURN_CONT</name>
-        <length>100</length>
+        <name>APPROVE_DIV</name>
+        <length>2</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>RETURN_CONT</comments>
+        <comments>APPROVE_DIV</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -931,11 +819,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>RETURN_RECE</name>
-        <length>50</length>
+        <name>PAYMENT_NO</name>
+        <length>150</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>RETURN_RECE</comments>
+        <comments>PAYMENT_NO</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -954,34 +842,11 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>RETURN_TELE</name>
-        <length>200</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>RETURN_TELE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>ko_KR</date_format_locale>
-        <date_format_timezone>Asia/Seoul</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>RETURN_ZIP</name>
+        <name>VALIDITY_DATE</name>
         <length>6</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>RETURN_ZIP</comments>
+        <comments>VALIDITY_DATE</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1000,57 +865,494 @@ FROM SLOSSHIST</sql>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>RETURN_ADDR</name>
-        <length>200</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>RETURN_ADDR</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>ko_KR</date_format_locale>
-        <date_format_timezone>Asia/Seoul</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>RETURN_ADDR1</name>
-        <length>200</length>
-        <precision>-1</precision>
-        <origin>Table input</origin>
-        <comments>RETURN_ADDR1</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>ko_KR</date_format_locale>
-        <date_format_timezone>Asia/Seoul</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>PHOTO_NAME</name>
+        <name>APPROVE_NO</name>
         <length>20</length>
         <precision>-1</precision>
         <origin>Table input</origin>
-        <comments>PHOTO_NAME</comments>
+        <comments>APPROVE_NO</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_SWIPE_DIV</name>
+        <length>1</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_SWIPE_DIV</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_SEQ</name>
+        <length>4</length>
+        <precision>0</precision>
+        <origin>Table input</origin>
+        <comments>CARD_SEQ</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_MAX_SEQ</name>
+        <length>4</length>
+        <precision>0</precision>
+        <origin>Table input</origin>
+        <comments>CARD_MAX_SEQ</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_UNIQUE</name>
+        <length>12</length>
+        <precision>0</precision>
+        <origin>Table input</origin>
+        <comments>CARD_UNIQUE</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_MONTH</name>
+        <length>2</length>
+        <precision>0</precision>
+        <origin>Table input</origin>
+        <comments>CARD_MONTH</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_KIND</name>
+        <length>30</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_KIND</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_NOTICE</name>
+        <length>200</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_NOTICE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_DDC</name>
+        <length>1</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_DDC</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_VAN_CODE</name>
+        <length>4</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_VAN_CODE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_CUST_CODE</name>
+        <length>4</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_CUST_CODE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_CUST_NAME</name>
+        <length>30</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_CUST_NAME</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_TMID</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_TMID</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>JOIN_NO</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>JOIN_NO</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>PAYMENT_AMT</name>
+        <length>9</length>
+        <precision>0</precision>
+        <origin>Table input</origin>
+        <comments>PAYMENT_AMT</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_KEYIN</name>
+        <length>2</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_KEYIN</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>READ_DATA</name>
+        <length>100</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>READ_DATA</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>RESP_CODE</name>
+        <length>4</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>RESP_CODE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_MSG</name>
+        <length>200</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_MSG</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CARD_KEYNO</name>
+        <length>30</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CARD_KEYNO</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CO_DIV</name>
+        <length>1</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>CO_DIV</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>RTN_DATE</name>
+        <length>8</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>RTN_DATE</comments>
         <conversion_Mask/>
         <decimal_symbol>.</decimal_symbol>
         <grouping_symbol>,</grouping_symbol>
@@ -1070,7 +1372,7 @@ FROM SLOSSHIST</sql>
         <type>String</type>
         <storagetype>normal</storagetype>
         <name>KEYIN_EMPNO</name>
-        <length>13</length>
+        <length>20</length>
         <precision>-1</precision>
         <origin>Table input</origin>
         <comments>KEYIN_EMPNO</comments>
@@ -1112,6 +1414,29 @@ FROM SLOSSHIST</sql>
         <date_format_timezone>Asia/Seoul</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>PREPAY_DIV</name>
+        <length>1</length>
+        <precision>-1</precision>
+        <origin>Table input</origin>
+        <comments>PREPAY_DIV</comments>
+        <conversion_Mask/>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol>,</grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>ko_KR</date_format_locale>
+        <date_format_timezone>Asia/Seoul</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
     </row-meta>
     <attributes/>
     <cluster_schema/>
@@ -1122,8 +1447,8 @@ FROM SLOSSHIST</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>176</xloc>
-      <yloc>480</yloc>
+      <xloc>528</xloc>
+      <yloc>576</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1138,13 +1463,13 @@ FROM SLOSSHIST</sql>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>ec2-user-app</connection>
+    <connection>ec2-user-app-direct</connection>
     <schema/>
-    <table>SLOSSHIST</table>
+    <table>SPAYMCARD</table>
     <commit>1000</commit>
-    <truncate>N</truncate>
+    <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
+    <use_batch>N</use_batch>
     <specify_fields>N</specify_fields>
     <partitioning_enabled>N</partitioning_enabled>
     <partitioning_field/>
@@ -1156,6 +1481,158 @@ FROM SLOSSHIST</sql>
     <return_keys>N</return_keys>
     <return_field/>
     <fields>
+      <field>
+        <column_name>PAYMENT_DATE</column_name>
+        <stream_name>PAYMENT_DATE</stream_name>
+      </field>
+      <field>
+        <column_name>SHOP_CODE</column_name>
+        <stream_name>SHOP_CODE</stream_name>
+      </field>
+      <field>
+        <column_name>SLIP_NO</column_name>
+        <stream_name>SLIP_NO</stream_name>
+      </field>
+      <field>
+        <column_name>PAYMENT_DIV</column_name>
+        <stream_name>PAYMENT_DIV</stream_name>
+      </field>
+      <field>
+        <column_name>LOCK_NO</column_name>
+        <stream_name>LOCK_NO</stream_name>
+      </field>
+      <field>
+        <column_name>PAYMENT_NAME</column_name>
+        <stream_name>PAYMENT_NAME</stream_name>
+      </field>
+      <field>
+        <column_name>MEMB_NO</column_name>
+        <stream_name>MEMB_NO</stream_name>
+      </field>
+      <field>
+        <column_name>BOOK_CRS</column_name>
+        <stream_name>BOOK_CRS</stream_name>
+      </field>
+      <field>
+        <column_name>BOOK_TIME</column_name>
+        <stream_name>BOOK_TIME</stream_name>
+      </field>
+      <field>
+        <column_name>PAYMENT_CODE</column_name>
+        <stream_name>PAYMENT_CODE</stream_name>
+      </field>
+      <field>
+        <column_name>APPROVE_DIV</column_name>
+        <stream_name>APPROVE_DIV</stream_name>
+      </field>
+      <field>
+        <column_name>PAYMENT_NO</column_name>
+        <stream_name>PAYMENT_NO</stream_name>
+      </field>
+      <field>
+        <column_name>VALIDITY_DATE</column_name>
+        <stream_name>VALIDITY_DATE</stream_name>
+      </field>
+      <field>
+        <column_name>APPROVE_NO</column_name>
+        <stream_name>APPROVE_NO</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_SWIPE_DIV</column_name>
+        <stream_name>CARD_SWIPE_DIV</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_SEQ</column_name>
+        <stream_name>CARD_SEQ</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_MAX_SEQ</column_name>
+        <stream_name>CARD_MAX_SEQ</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_UNIQUE</column_name>
+        <stream_name>CARD_UNIQUE</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_MONTH</column_name>
+        <stream_name>CARD_MONTH</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_KIND</column_name>
+        <stream_name>CARD_KIND</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_NOTICE</column_name>
+        <stream_name>CARD_NOTICE</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_DDC</column_name>
+        <stream_name>CARD_DDC</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_VAN_CODE</column_name>
+        <stream_name>CARD_VAN_CODE</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_CUST_CODE</column_name>
+        <stream_name>CARD_CUST_CODE</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_CUST_NAME</column_name>
+        <stream_name>CARD_CUST_NAME</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_TMID</column_name>
+        <stream_name>CARD_TMID</stream_name>
+      </field>
+      <field>
+        <column_name>JOIN_NO</column_name>
+        <stream_name>JOIN_NO</stream_name>
+      </field>
+      <field>
+        <column_name>PAYMENT_AMT</column_name>
+        <stream_name>PAYMENT_AMT</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_KEYIN</column_name>
+        <stream_name>CARD_KEYIN</stream_name>
+      </field>
+      <field>
+        <column_name>READ_DATA</column_name>
+        <stream_name>READ_DATA</stream_name>
+      </field>
+      <field>
+        <column_name>RESP_CODE</column_name>
+        <stream_name>RESP_CODE</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_MSG</column_name>
+        <stream_name>CARD_MSG</stream_name>
+      </field>
+      <field>
+        <column_name>CARD_KEYNO</column_name>
+        <stream_name>CARD_KEYNO</stream_name>
+      </field>
+      <field>
+        <column_name>CO_DIV</column_name>
+        <stream_name>CO_DIV</stream_name>
+      </field>
+      <field>
+        <column_name>RTN_DATE</column_name>
+        <stream_name>RTN_DATE</stream_name>
+      </field>
+      <field>
+        <column_name>KEYIN_EMPNO</column_name>
+        <stream_name>KEYIN_EMPNO</stream_name>
+      </field>
+      <field>
+        <column_name>KEYIN_DATE</column_name>
+        <stream_name>KEYIN_DATE</stream_name>
+      </field>
+      <field>
+        <column_name>PREPAY_DIV</column_name>
+        <stream_name>PREPAY_DIV</stream_name>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1166,8 +1643,8 @@ FROM SLOSSHIST</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>512</xloc>
-      <yloc>480</yloc>
+      <xloc>1072</xloc>
+      <yloc>576</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
